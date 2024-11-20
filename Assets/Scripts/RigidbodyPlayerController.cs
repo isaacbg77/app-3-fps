@@ -23,13 +23,28 @@ public class RigidbodyPlayerController : MonoBehaviour
     private float currentRotationVelocityY;
 
     private Rigidbody playerBody;
+    private CapsuleCollider playerCollider;
     private Vector3 cameraTargetEulers;
 
     public bool IsMoving => moveX != 0 || moveZ != 0;
-    public bool IsGrounded => playerBody.velocity.y == 0;
+    public bool IsGrounded => Physics.OverlapBox(
+        transform.TransformPoint(playerCollider.center), 
+        playerCollider.bounds.extents,
+        transform.rotation,
+        LayerMask.GetMask("Ground")).Length > 0;
     public bool IsSprinting => Input.GetButton("Sprint") && IsGrounded;
     public bool IsJumping => Input.GetButton("Jump") && IsGrounded;
     
+    /*
+    public bool IsGrounded()
+    {
+        float offset = (playerCollider.height / 2) - playerCollider.radius;
+        Vector3 point0 = transform.TransformPoint(playerCollider.center - Vector3.up * offset);
+        Vector3 point1 = transform.TransformPoint(playerCollider.center + Vector3.up * offset);
+
+        return Physics.OverlapCapsule(point0, point1, playerCollider.radius, LayerMask.GetMask("Ground")).Length > 0;
+    }
+    */
 
     private void Awake()
     {
@@ -39,6 +54,13 @@ public class RigidbodyPlayerController : MonoBehaviour
         }
         else
             Debug.LogError("Missing player rigidbody component!");
+
+        if (TryGetComponent(out CapsuleCollider collider))
+        {
+            playerCollider = collider;
+        }
+        else
+            Debug.LogError("Missing player capsule collider component!");
 
         cameraTargetEulers = cameraTarget.eulerAngles;
 
