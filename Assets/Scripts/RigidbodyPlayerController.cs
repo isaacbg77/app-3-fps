@@ -32,7 +32,7 @@ public class RigidbodyPlayerController : MonoBehaviour
     private Vector3 cameraTargetStartPos;
 
     public bool IsMoving => moveX != 0 || moveZ != 0;
-    public bool IsSprinting => Input.GetButton("Sprint") && IsGrounded && (moveX > 0 || moveZ > 0);
+    public bool IsSprinting => Input.GetButton("Sprint") && IsGrounded && IsMoving;
     public bool IsJumping => Input.GetButton("Jump") && IsGrounded;
     public bool IsGrounded { get; private set; }
     
@@ -163,19 +163,15 @@ public class RigidbodyPlayerController : MonoBehaviour
             cameraTarget.eulerAngles.x,
             cameraTargetEulers.x,
             ref currentRotationVelocityX,
-            cameraSmoothTime,
-            float.MaxValue,
-            Time.fixedDeltaTime
+            cameraSmoothTime
         );
         float angleY = Mathf.SmoothDampAngle(
             cameraTarget.eulerAngles.y,
             cameraTargetEulers.y,
             ref currentRotationVelocityY,
-            cameraSmoothTime,
-            float.MaxValue,
-            Time.fixedDeltaTime
+            cameraSmoothTime
         );
 
-        cameraTarget.rotation = Quaternion.Euler(angleX, angleY, 0);
+        cameraTarget.localRotation = Quaternion.Euler(angleX, angleY, 0);
     }
 }
