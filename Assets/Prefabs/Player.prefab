@@ -200,15 +200,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTarget: {fileID: 687493936470520886}
+  mouseXSpeed: 1
+  mouseYSpeed: 1
+  cameraClampAngle: 85
+  cameraSmoothTime: 0.1
+  headBobAmplitude: 0.9
+  headBobFrequency: 18
   moveSpeed: 50
   sprintSpeed: 15
   sqrMaxVelocity: 20
   jumpStrength: 4
   airDrag: 0.1
-  mouseXSpeed: 1
-  mouseYSpeed: 1
-  cameraClampAngle: 85
-  cameraSmoothTime: 0.1
 --- !u!1 &3843580846895688883
 GameObject:
   m_ObjectHideFlags: 0
