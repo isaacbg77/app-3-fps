@@ -1027,6 +1027,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3687351265149563028, guid: 87b854206caac394796eb24728951fd9,
+        type: 3}
+      propertyPath: headBobAmplitude
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3687351265149563028, guid: 87b854206caac394796eb24728951fd9,
+        type: 3}
+      propertyPath: headBobFrequency
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 5913296849782722192, guid: 87b854206caac394796eb24728951fd9,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -2,18 +2,22 @@ using UnityEngine;
 
 public class RigidbodyPlayerController : MonoBehaviour
 {
+    [Header("Camera Controls")]
     [SerializeField] private Transform cameraTarget;
-
+    [SerializeField, Range(0, 10)] private float mouseXSpeed = 1f;
+    [SerializeField, Range(0, 10)] private float mouseYSpeed = 1f;
+    [SerializeField, Range(0, 90)] private float cameraClampAngle = 85f;
+    [SerializeField, Range(0, 1)] private float cameraSmoothTime = 0.1f;
+    [Space]
+    [SerializeField, Range(0, 5)] private float headBobAmplitude = 1f;
+    [SerializeField, Range(0, 50)] private float headBobFrequency = 1f;
+    [Space]
+    [Header("Movement Controls")]
     [SerializeField] private float moveSpeed = 50f;
     [SerializeField] private float sprintSpeed = 10f;
     [SerializeField] private float sqrMaxVelocity = 20f;
     [SerializeField] private float jumpStrength = 5f;
-    [SerializeField] private float airDrag = 0.1f;
-
-    [SerializeField] private float mouseXSpeed = 1f;
-    [SerializeField] private float mouseYSpeed = 1f;
-    [SerializeField] private float cameraClampAngle = 85f;
-    [SerializeField] private float cameraSmoothTime = 0.1f;
+    [SerializeField, Range(0, 1)] private float airDrag = 0.1f;
 
     private float moveX, moveZ = 0;
     private float mouseX, mouseY = 0;
@@ -25,26 +29,13 @@ public class RigidbodyPlayerController : MonoBehaviour
     private Rigidbody playerBody;
     private CapsuleCollider playerCollider;
     private Vector3 cameraTargetEulers;
+    private Vector3 cameraTargetStartPos;
 
     public bool IsMoving => moveX != 0 || moveZ != 0;
-    public bool IsGrounded => Physics.OverlapBox(
-        transform.TransformPoint(playerCollider.center), 
-        playerCollider.bounds.extents,
-        transform.rotation,
-        LayerMask.GetMask("Ground")).Length > 0;
-    public bool IsSprinting => Input.GetButton("Sprint") && IsGrounded;
+    public bool IsSprinting => Input.GetButton("Sprint") && IsGrounded && (moveX > 0 || moveZ > 0);
     public bool IsJumping => Input.GetButton("Jump") && IsGrounded;
+    public bool IsGrounded { get; private set; }
     
-    /*
-    public bool IsGrounded()
-    {
-        float offset = (playerCollider.height / 2) - playerCollider.radius;
-        Vector3 point0 = transform.TransformPoint(playerCollider.center - Vector3.up * offset);
-        Vector3 point1 = transform.TransformPoint(playerCollider.center + Vector3.up * offset);
-
-        return Physics.OverlapCapsule(point0, point1, playerCollider.radius, LayerMask.GetMask("Ground")).Length > 0;
-    }
-    */
 
     private void Awake()
     {
@@ -63,6 +54,7 @@ public class RigidbodyPlayerController : MonoBehaviour
             Debug.LogError("Missing player capsule collider component!");
 
         cameraTargetEulers = cameraTarget.eulerAngles;
+        cameraTargetStartPos = cameraTarget.localPosition;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -79,6 +71,15 @@ public class RigidbodyPlayerController : MonoBehaviour
         // Movement
         moveX = Input.GetAxis("Horizontal") * moveSpeed;
         moveZ = Input.GetAxis("Vertical") * moveSpeed;
+
+        if (IsSprinting)
+        {
+            DoHeadBob();
+        }
+        else if (cameraTarget.localPosition != cameraTargetStartPos)
+        {
+            ResetCamera();
+        }
 
         // Camera
         mouseX = Input.GetAxis("Mouse X") * mouseXSpeed;
@@ -100,9 +101,27 @@ public class RigidbodyPlayerController : MonoBehaviour
             Cursor.visible = false;
         }
     }
+
+    private void DoHeadBob()
+    {
+        Vector3 newPos = Vector3.zero;
+        newPos.y += Mathf.Sin(Time.time * headBobFrequency) * headBobAmplitude * Time.deltaTime;
+        cameraTarget.localPosition += newPos;
+    }
     
+    private void ResetCamera()
+    {
+        cameraTarget.localPosition = cameraTargetStartPos;
+    }
+
     private void FixedUpdate()
     {
+        IsGrounded = Physics.OverlapBox(
+            transform.TransformPoint(playerCollider.center), 
+            playerCollider.bounds.extents,
+            transform.rotation,
+            LayerMask.GetMask("Ground")).Length > 0;
+
         HandlePlayerMove();
     }
 
