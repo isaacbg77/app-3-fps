@@ -6,7 +6,7 @@ public class PlayerWeaponController : MonoBehaviour
 {
     [SerializeField] private Gun playerGun;
 
-    private void Awake()
+    private void Start()
     {
         UIManager.Instance.UpdatePlayerAmmo(playerGun.AmmoLeft);
     }
