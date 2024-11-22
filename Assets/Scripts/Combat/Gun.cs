@@ -12,11 +12,19 @@ public class Gun : MonoBehaviour
     private int ammo = 0;
     public int AmmoLeft => ammo;
 
+    private Animator anim;
     private bool canFire = true;
 
     private void Awake()
     {
-        ammo = startingAmmo; 
+        ammo = startingAmmo;
+
+        if (TryGetComponent(out Animator animator))
+        {
+            anim = animator;
+        }
+        else
+            Debug.LogError("Gun is missing an animator!");
     }
     
     public void IncreaseAmmo(int amount)
@@ -55,7 +63,9 @@ public class Gun : MonoBehaviour
                 }
             }
         }
+
         DecreaseAmmo(1);
+        anim.Play("Fire");
 
         yield return new WaitForSeconds(fireDelay);
         canFire = true;
