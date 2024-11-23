@@ -13,6 +13,7 @@ public class Gun : MonoBehaviour
     public int AmmoLeft => ammo;
 
     private Animator anim;
+    private ParticleSystem muzzleFlash;
     private bool canFire = true;
 
     private void Awake()
@@ -25,6 +26,10 @@ public class Gun : MonoBehaviour
         }
         else
             Debug.LogError("Gun is missing an animator!");
+
+        muzzleFlash = GetComponentInChildren<ParticleSystem>();
+        if (muzzleFlash == null)
+            Debug.LogError("Gun is missing a particle system!");
     }
     
     public void IncreaseAmmo(int amount)
@@ -66,6 +71,7 @@ public class Gun : MonoBehaviour
 
         DecreaseAmmo(1);
         anim.Play("Fire");
+        muzzleFlash.Play();
 
         yield return new WaitForSeconds(fireDelay);
         canFire = true;
