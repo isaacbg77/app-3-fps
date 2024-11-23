@@ -25,8 +25,8 @@ public class UIManager : MonoBehaviour
         playerHealth.text = value.ToString();
     }
     
-    public void UpdatePlayerAmmo(int value)
+    public void UpdatePlayerAmmo(int clipValue, int totalValue)
     {
-        playerAmmo.text = "Ammo: " + value.ToString();
+        playerAmmo.text = clipValue.ToString() + " | " + totalValue.ToString();
     }
 }

@@ -5,12 +5,16 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     [SerializeField] private int startingAmmo;
+    [SerializeField] private int clipSize;
     [SerializeField] private int damage = 10;
     [SerializeField] private float range = 100f;
     [SerializeField] private float fireDelay = 1f;
+    [SerializeField] private float reloadDelay = 1f;
 
     private int ammo = 0;
+    private int clipAmmo = 0;
     public int AmmoLeft => ammo;
+    public int ClipAmmoLeft => clipAmmo;
 
     private Animator anim;
     private ParticleSystem muzzleFlash;
@@ -18,8 +22,6 @@ public class Gun : MonoBehaviour
 
     private void Awake()
     {
-        ammo = startingAmmo;
-
         if (TryGetComponent(out Animator animator))
         {
             anim = animator;
@@ -30,23 +32,50 @@ public class Gun : MonoBehaviour
         muzzleFlash = GetComponentInChildren<ParticleSystem>();
         if (muzzleFlash == null)
             Debug.LogError("Gun is missing a particle system!");
+        
+        ammo = startingAmmo;
+        ReloadClip();
     }
     
-    public void IncreaseAmmo(int amount)
+    public void AddAmmo(int amount)
     {
         if (amount < 0) return;
         ammo += amount;
     }
 
-    public void DecreaseAmmo(int amount)
+    public void ReloadClip()
     {
-        if (amount < 0) return;
-        ammo -= amount;
+        canFire = false;
+        StartCoroutine(ReloadWithDelay());
+    }
+    
+    private IEnumerator ReloadWithDelay()
+    {
+        if (ammo > 0 && clipAmmo < clipSize)
+        {
+            anim.Play("Reload");
+
+            int diff = clipSize - clipAmmo;
+            if (ammo < diff)
+            {
+                clipAmmo += ammo;
+                ammo = 0;
+            }
+            else
+            {
+                clipAmmo += diff;
+                ammo -= diff;
+            }
+
+        }
+
+        yield return new WaitForSeconds(reloadDelay);
+        canFire = true;
     }
 
     public void Fire(LayerMask targetLayers)
     {
-        if (canFire)
+        if (canFire && clipAmmo > 0)
         {
             StartCoroutine(FireWithDelay(targetLayers));
             canFire = false;
@@ -69,7 +98,7 @@ public class Gun : MonoBehaviour
             }
         }
 
-        DecreaseAmmo(1);
+        clipAmmo--;
         anim.Play("Fire");
         muzzleFlash.Play();
 

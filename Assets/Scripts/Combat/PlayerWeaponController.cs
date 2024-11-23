@@ -8,7 +8,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void Start()
     {
-        UIManager.Instance.UpdatePlayerAmmo(playerGun.AmmoLeft);
+        UpdateUI();
     }
 
     void Update()
@@ -16,7 +16,17 @@ public class PlayerWeaponController : MonoBehaviour
         if (Input.GetButton("Fire1"))
         {
             playerGun.Fire(LayerMask.GetMask("Enemy"));
-            UIManager.Instance.UpdatePlayerAmmo(playerGun.AmmoLeft);
+            UpdateUI();
         }
+        else if (Input.GetButtonUp("Reload"))
+        {
+            playerGun.ReloadClip();
+            UpdateUI();
+        }
+    }
+
+    private void UpdateUI()
+    {
+        UIManager.Instance.UpdatePlayerAmmo(playerGun.ClipAmmoLeft, playerGun.AmmoLeft);
     }
 }
