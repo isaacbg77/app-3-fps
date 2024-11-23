@@ -53,9 +53,14 @@ public abstract class AIBehaviour : MonoBehaviour
     {
         Vector3 dir = (target.position - start.position).normalized;
         float angleBetween = Vector3.Angle(start.forward, dir);
-        string layerName = LayerMask.LayerToName(target.gameObject.layer);
-        bool hitTarget = Physics.Raycast(start.position, dir, range, LayerMask.GetMask(layerName));
 
-        return (angleBetween <= angle) && hitTarget;
+        if (Physics.Raycast(start.position, dir, out RaycastHit hit, range))
+        {
+            return (angleBetween <= angle) && hit.transform.gameObject == target.gameObject;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

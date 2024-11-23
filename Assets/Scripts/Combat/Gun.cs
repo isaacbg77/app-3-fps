@@ -19,6 +19,7 @@ public class Gun : MonoBehaviour
     private Animator anim;
     private ParticleSystem muzzleFlash;
     private bool canFire = true;
+    private bool reloading = false;
 
     private void Awake()
     {
@@ -34,7 +35,7 @@ public class Gun : MonoBehaviour
             Debug.LogError("Gun is missing a particle system!");
         
         ammo = startingAmmo;
-        ReloadClip();
+        ReloadClip(false);
     }
     
     public void AddAmmo(int amount)
@@ -43,17 +44,18 @@ public class Gun : MonoBehaviour
         ammo += amount;
     }
 
-    public void ReloadClip()
+    public void ReloadClip(bool playAnimation)
     {
-        canFire = false;
-        StartCoroutine(ReloadWithDelay());
+        reloading = true;
+        StartCoroutine(ReloadWithDelay(playAnimation));
     }
     
-    private IEnumerator ReloadWithDelay()
+    private IEnumerator ReloadWithDelay(bool playAnimation)
     {
         if (ammo > 0 && clipAmmo < clipSize)
         {
-            anim.Play("Reload");
+            if (playAnimation)
+                anim.Play("Reload");
 
             int diff = clipSize - clipAmmo;
             if (ammo < diff)
@@ -70,23 +72,23 @@ public class Gun : MonoBehaviour
         }
 
         yield return new WaitForSeconds(reloadDelay);
-        canFire = true;
+        reloading = false;
     }
 
-    public void Fire(LayerMask targetLayers)
+    public void Fire()
     {
-        if (canFire && clipAmmo > 0)
+        if (canFire && !reloading && clipAmmo > 0)
         {
-            StartCoroutine(FireWithDelay(targetLayers));
+            StartCoroutine(FireWithDelay());
             canFire = false;
         }
     }
 
-    private IEnumerator FireWithDelay(LayerMask targetLayers)
+    private IEnumerator FireWithDelay()
     {
         Debug.DrawRay(transform.position, transform.forward * range, Color.cyan, 5f);
 
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range, targetLayers))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range))
         {
             if (hit.transform.gameObject.TryGetComponent(out Health health))
             {

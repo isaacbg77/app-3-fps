@@ -5,6 +5,7 @@ using UnityEngine;
 public class AIHostileStationary : AIBehaviour
 {
     [SerializeField] private Transform target;
+    [SerializeField] private Gun gun;
     [SerializeField, Range(0, 90)] private float fovAngle = 45f;
     [SerializeField, Range(0, 100)] private float fovRange = 45f;
     
@@ -29,7 +30,14 @@ public class AIHostileStationary : AIBehaviour
 
             if (navAgent.remainingDistance <= fovRange)
             {
-                // Fire weapon
+                if (gun.ClipAmmoLeft > 0)
+                {
+                    gun.Fire();
+                }
+                else
+                {
+                    gun.ReloadClip(false);
+                }
             }
         }
     }

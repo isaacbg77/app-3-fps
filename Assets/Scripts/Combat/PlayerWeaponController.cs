@@ -15,12 +15,12 @@ public class PlayerWeaponController : MonoBehaviour
     {
         if (Input.GetButton("Fire1"))
         {
-            playerGun.Fire(LayerMask.GetMask("Enemy"));
+            playerGun.Fire();
             UpdateUI();
         }
         else if (Input.GetButtonUp("Reload"))
         {
-            playerGun.ReloadClip();
+            playerGun.ReloadClip(true);
             UpdateUI();
         }
     }
