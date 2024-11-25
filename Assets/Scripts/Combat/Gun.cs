@@ -10,6 +10,10 @@ public class Gun : MonoBehaviour
     [SerializeField] private float range = 100f;
     [SerializeField] private float fireDelay = 1f;
     [SerializeField] private float reloadDelay = 1f;
+    [Space]
+
+    [SerializeField] private AudioSource[] fireSounds;
+    [SerializeField] private AudioSource reloadSound;
 
     private int ammo = 0;
     private int clipAmmo = 0;
@@ -55,7 +59,10 @@ public class Gun : MonoBehaviour
         if (ammo > 0 && clipAmmo < clipSize)
         {
             if (playAnimation)
+            {
                 anim.Play("Reload");
+                reloadSound.Play();
+            }
 
             int diff = clipSize - clipAmmo;
             if (ammo < diff)
@@ -103,6 +110,7 @@ public class Gun : MonoBehaviour
         clipAmmo--;
         anim.Play("Fire");
         muzzleFlash.Play();
+        fireSounds[Random.Range(0, fireSounds.Length)].Play();
 
         yield return new WaitForSeconds(fireDelay);
         canFire = true;
