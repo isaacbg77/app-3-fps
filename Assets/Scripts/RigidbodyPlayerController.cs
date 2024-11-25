@@ -121,7 +121,7 @@ public class RigidbodyPlayerController : MonoBehaviour
             transform.TransformPoint(playerCollider.center), 
             playerCollider.bounds.extents,
             transform.rotation,
-            LayerMask.GetMask("Ground", "Stairs")).Length > 0;
+            LayerMask.GetMask("Ground")).Length > 0;
 
         HandlePlayerMove();
     }
