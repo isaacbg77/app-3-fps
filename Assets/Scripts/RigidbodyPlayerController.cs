@@ -18,6 +18,7 @@ public class RigidbodyPlayerController : MonoBehaviour
     [SerializeField] private float sqrMaxVelocity = 20f;
     [SerializeField] private float jumpStrength = 5f;
     [SerializeField, Range(0, 1)] private float airDrag = 0.1f;
+    [SerializeField, Range(0, 10)] private float stairAssist = 1f;
 
     private float moveX, moveZ = 0;
     private float mouseX, mouseY = 0;
@@ -120,7 +121,7 @@ public class RigidbodyPlayerController : MonoBehaviour
             transform.TransformPoint(playerCollider.center), 
             playerCollider.bounds.extents,
             transform.rotation,
-            LayerMask.GetMask("Ground")).Length > 0;
+            LayerMask.GetMask("Ground", "Stairs")).Length > 0;
 
         HandlePlayerMove();
     }
@@ -143,6 +144,15 @@ public class RigidbodyPlayerController : MonoBehaviour
 
         Vector3 moveForce = moveX * Time.deltaTime * cameraTarget.right + 
             moveZ * Time.deltaTime * Vector3.Cross(cameraTarget.right, playerBody.transform.up).normalized;
+
+        // Check for stairs
+        if (Physics.Raycast(playerBody.position, Vector3.down, out RaycastHit hit, playerCollider.bounds.extents.y + 0.1f))
+        {
+            if (LayerMask.LayerToName(hit.transform.gameObject.layer) == "Stairs")
+            {
+                moveForce.y += stairAssist;
+            }
+        }
 
         Vector3 velocityXZ = new(playerBody.velocity.x, 0, playerBody.velocity.z);
         if (velocityXZ.sqrMagnitude < (IsSprinting ? sqrMaxVelocity + sprintSpeed : sqrMaxVelocity))
