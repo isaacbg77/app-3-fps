@@ -8,7 +8,10 @@ public enum AIState { Idle, Chase, Run }
 public abstract class AIBehaviour : MonoBehaviour
 {
     protected NavMeshAgent navAgent;
+    protected Animator anim;
     protected AIState state = AIState.Idle;
+
+    protected bool isMoving = false;
 
     protected void Awake()
     {
@@ -18,10 +21,19 @@ public abstract class AIBehaviour : MonoBehaviour
         }
         else
             Debug.LogError("Missing NavMeshAgent component!");
+
+        anim = GetComponentInChildren<Animator>();
+        if (anim == null)
+            Debug.LogError("Missing Animator component!");
     }
 
     protected void Update()
     {
+        // Check if nav agent is moving
+        Vector3 velocityXZ = new(navAgent.velocity.x, 0, navAgent.velocity.z);
+        isMoving = velocityXZ.sqrMagnitude > 0;
+        anim.SetBool("IsMoving", isMoving);
+        
         HandleAIBehaviour();
     }
 

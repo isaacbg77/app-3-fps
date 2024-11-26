@@ -8,6 +8,7 @@ public class AIHostileStationary : AIBehaviour
     [SerializeField] private Gun gun;
     [SerializeField, Range(0, 90)] private float fovAngle = 45f;
     [SerializeField, Range(0, 100)] private float fovRange = 45f;
+    [SerializeField, Range(0, 10)] private float maxTargetDelay = 2f;
     
     protected override void HandleAIBehaviour()
     {
@@ -15,7 +16,7 @@ public class AIHostileStationary : AIBehaviour
         {
             if (CanSeeTarget(transform, target, fovAngle, fovRange))
             {
-                ChangeState(AIState.Chase);
+                StartCoroutine(TargetWithDelay());
             }
         }
         else if (state == AIState.Chase)
@@ -28,11 +29,12 @@ public class AIHostileStationary : AIBehaviour
             navAgent.SetDestination(target.position);
             transform.LookAt(new Vector3(target.position.x, transform.position.y, target.position.z));
 
-            if (navAgent.remainingDistance <= fovRange)
+            if (navAgent.remainingDistance <= fovRange && !isMoving)
             {
-                if (gun.ClipAmmoLeft > 0)
+                if (gun.ClipAmmoLeft > 0 && !gun.Reloading)
                 {
                     gun.Fire();
+                    anim.Play("Fire");
                 }
                 else
                 {
@@ -40,5 +42,11 @@ public class AIHostileStationary : AIBehaviour
                 }
             }
         }
+    }
+
+    private IEnumerator TargetWithDelay()
+    {
+        yield return new WaitForSeconds(Random.Range(0, maxTargetDelay));
+        ChangeState(AIState.Chase);
     }
 }

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8586997225498418252}
   - component: {fileID: 1642231139416766556}
   - component: {fileID: 1595272469206339119}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: InteractableDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

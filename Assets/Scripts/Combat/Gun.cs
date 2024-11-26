@@ -17,13 +17,15 @@ public class Gun : MonoBehaviour
 
     private int ammo = 0;
     private int clipAmmo = 0;
-    public int AmmoLeft => ammo;
-    public int ClipAmmoLeft => clipAmmo;
 
     private Animator anim;
     private ParticleSystem muzzleFlash;
     private bool canFire = true;
     private bool reloading = false;
+    
+    public int AmmoLeft => ammo;
+    public int ClipAmmoLeft => clipAmmo;
+    public bool Reloading => reloading;
 
     private void Awake()
     {
@@ -97,6 +99,7 @@ public class Gun : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range))
         {
+            //Debug.Log(hit.transform.gameObject);
             if (hit.transform.gameObject.TryGetComponent(out Health health))
             {
                 health.DecreaseHealth(damage);
