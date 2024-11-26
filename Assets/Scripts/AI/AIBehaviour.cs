@@ -29,17 +29,36 @@ public abstract class AIBehaviour : MonoBehaviour
 
     protected void Update()
     {
-        // Check if nav agent is moving
+        CheckMovement();
+
+        if (state == AIState.Idle)
+        {
+            HandleIdle();
+        }
+        else if (state == AIState.Chase)
+        {
+            HandleChase();
+        }
+        else if (state == AIState.Run)
+        {
+            HandleRun();
+        }
+    }
+
+    // AI must implement a default idle behaviour, and can optionally implement other behaviours
+    protected abstract void HandleIdle();
+    protected virtual void HandleChase() { /* Chase behaviour */ }
+    protected virtual void HandleRun() { /* Run away behaviour */ }
+
+    // -------------------------------------------------------------------------------------------
+
+    private void CheckMovement()
+    {
+        // Check if nav agent is moving and update animation
         Vector3 velocityXZ = new(navAgent.velocity.x, 0, navAgent.velocity.z);
         isMoving = velocityXZ.sqrMagnitude > 0;
         anim.SetBool("IsMoving", isMoving);
-        
-        HandleAIBehaviour();
     }
-
-    protected abstract void HandleAIBehaviour();
-
-    // -------------------------------------------------------------------------------------------
 
     public void ChangeState(AIState newState)
     {
