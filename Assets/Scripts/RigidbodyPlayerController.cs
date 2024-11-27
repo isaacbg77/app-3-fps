@@ -117,18 +117,29 @@ public class RigidbodyPlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        IsGrounded = Physics.OverlapBox(
-            transform.TransformPoint(playerCollider.center), 
-            playerCollider.bounds.extents,
-            transform.rotation,
-            LayerMask.GetMask("Ground")).Length > 0;
-
+        IsGrounded = CheckIfGrounded();
         HandlePlayerMove();
     }
 
     private void LateUpdate()
     {
         HandleCameraRotation();
+    }
+
+    private bool CheckIfGrounded()
+    {
+        bool isColliding = Physics.OverlapBox(
+            transform.TransformPoint(playerCollider.center),
+            playerCollider.bounds.extents,
+            transform.rotation,
+            LayerMask.GetMask("Ground")).Length > 0;
+
+        if (Physics.Raycast(playerBody.position, Vector3.down, out RaycastHit hit, playerCollider.bounds.extents.y + 0.1f))
+        {
+            return isColliding && hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground");
+        }
+
+        return false;
     }
 
     private void HandlePlayerMove()
