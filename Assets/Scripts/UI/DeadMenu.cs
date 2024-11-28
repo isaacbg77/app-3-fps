@@ -10,7 +10,7 @@ public class DeadMenu : MonoBehaviour
     private void Awake()
     {
         enemiesKilled.text = "Enemies Killed: " + GameManager.Instance.EnemiesKilled.ToString();
-        elapsedTime.text = "Elapsed Time: " + GameManager.Instance.Timer.GetFormattedTime();
+        elapsedTime.text = "Elapsed Time: " + GameTimer.GetFormattedTime(GameManager.Instance.Timer.ElapsedSeconds);
     }
     
     public void RestartGame()

@@ -52,9 +52,19 @@ public class GameManager : MonoBehaviour
     {
         IsGameActive = false;
 
+        // Log high scores to player prefs
         if (levelCompleted)
         {
+            int highScoreKills = PlayerPrefs.GetInt("HighScoreKills", -1);
+            if (enemiesKilled > highScoreKills)
+                PlayerPrefs.SetInt("HighScoreKills", enemiesKilled);
+            
+            float highScoreTime = PlayerPrefs.GetFloat("HighScoreTime", float.MaxValue);
+            if (timer.ElapsedSeconds < highScoreTime)
+                PlayerPrefs.SetFloat("HighScoreTime", timer.ElapsedSeconds);
 
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("Leaderboard");
         }
     }
 }

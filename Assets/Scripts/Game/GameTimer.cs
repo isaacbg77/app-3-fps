@@ -11,14 +11,14 @@ public class GameTimer : MonoBehaviour
         if (GameManager.Instance.IsGameActive)
         {
             ElapsedSeconds += Time.deltaTime;
-            timerText.text = GetFormattedTime();
+            timerText.text = GetFormattedTime(ElapsedSeconds);
         }
     }
 
-    public string GetFormattedTime()
+    public static string GetFormattedTime(float timeInSeconds)
     {
-        int minutes = Mathf.RoundToInt(ElapsedSeconds) / 60;
-        int seconds = Mathf.RoundToInt(ElapsedSeconds) % 60;
+        int minutes = Mathf.RoundToInt(timeInSeconds) / 60;
+        int seconds = Mathf.RoundToInt(timeInSeconds) % 60;
         return minutes.ToString() + ":" + (seconds < 10 ? "0" + seconds.ToString() : seconds.ToString());
     }
 }
