@@ -69,6 +69,8 @@ public class RigidbodyPlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.IsGamePaused) return;
+
         // Movement
         moveX = Input.GetAxis("Horizontal") * moveSpeed;
         moveZ = Input.GetAxis("Vertical") * moveSpeed;

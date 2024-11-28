@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : Health
 {
@@ -11,6 +10,8 @@ public class PlayerHealth : Health
 
     protected override void HandleDeath()
     {
-        Debug.Log("Im Dead!");
+        GameManager.Instance.EndGame(false);
+        SceneManager.LoadScene("Dead", LoadSceneMode.Additive);
+        gameObject.SetActive(false);
     }
 }
