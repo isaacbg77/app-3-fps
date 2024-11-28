@@ -3123,17 +3123,17 @@ PrefabInstance:
     - target: {fileID: 4751922330993925962, guid: c73f11c7efd75c44ba020cdfddad630e,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.002445
+      value: 1.4999999
       objectReference: {fileID: 0}
     - target: {fileID: 4751922330993925962, guid: c73f11c7efd75c44ba020cdfddad630e,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.002445
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4751922330993925962, guid: c73f11c7efd75c44ba020cdfddad630e,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.002445
+      value: 1.4999999
       objectReference: {fileID: 0}
     - target: {fileID: 4751922330993925962, guid: c73f11c7efd75c44ba020cdfddad630e,
         type: 3}
@@ -47407,17 +47407,17 @@ PrefabInstance:
     - target: {fileID: 7551994485909910838, guid: a7803394f5a38e04ab4f2d41c6eeb211,
         type: 3}
       propertyPath: m_SelectedEdges.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7551994485909910838, guid: a7803394f5a38e04ab4f2d41c6eeb211,
         type: 3}
       propertyPath: m_SelectedFaces.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7551994485909910838, guid: a7803394f5a38e04ab4f2d41c6eeb211,
         type: 3}
       propertyPath: m_SelectedVertices.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8852713540225054040, guid: a7803394f5a38e04ab4f2d41c6eeb211,
         type: 3}
