@@ -3755,9 +3755,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de73dc60fa1ad394eaf9c766d72c835d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoresContainer: {fileID: 0}
-  highScoresContainer: {fileID: 0}
-  scoreText: {fileID: 0}
+  highScoreKills: {fileID: 891047974}
+  highScoreTime: {fileID: 1705065386}
 --- !u!43 &1221287838
 Mesh:
   m_ObjectHideFlags: 0

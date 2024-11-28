@@ -134,11 +134,13 @@ public class RigidbodyPlayerController : MonoBehaviour
             transform.TransformPoint(playerCollider.center),
             playerCollider.bounds.extents,
             transform.rotation,
-            LayerMask.GetMask("Ground")).Length > 0;
+            LayerMask.GetMask("Ground", "Stairs")).Length > 0;
 
         if (Physics.Raycast(playerBody.position, Vector3.down, out RaycastHit hit, playerCollider.bounds.extents.y + 0.1f))
         {
-            return isColliding && hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground");
+            return isColliding && 
+                hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground") ||
+                hit.transform.gameObject.layer == LayerMask.NameToLayer("Stairs");
         }
 
         return false;
@@ -161,7 +163,7 @@ public class RigidbodyPlayerController : MonoBehaviour
         // Check for stairs
         if (Physics.Raycast(playerBody.position, Vector3.down, out RaycastHit hit, playerCollider.bounds.extents.y + 0.1f))
         {
-            if (LayerMask.LayerToName(hit.transform.gameObject.layer) == "Stairs")
+            if (LayerMask.LayerToName(hit.transform.gameObject.layer) == "Stairs" && !IsJumping)
             {
                 moveForce.y += stairAssist;
             }
