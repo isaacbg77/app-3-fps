@@ -9316,6 +9316,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1125089334}
     m_Modifications:
+    - target: {fileID: 179822067661658176, guid: 67aa806c30896f1428c6d859b610d166,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: d75e441a44e2e3e43b845370a18ec783,
+        type: 2}
     - target: {fileID: 3192911387822312590, guid: 67aa806c30896f1428c6d859b610d166,
         type: 3}
       propertyPath: m_Name
@@ -12749,6 +12755,12 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1538265942}
+    - target: {fileID: 9026448571226649673, guid: 94c59eee5831294469b4348fc9011dce,
+        type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 365e88c2ac9e14446bb54f7d2836db6e,
+        type: 2}
     - target: {fileID: 9104324217785181788, guid: 94c59eee5831294469b4348fc9011dce,
         type: 3}
       propertyPath: m_Mesh

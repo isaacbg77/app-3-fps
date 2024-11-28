@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2db6cd32f1140bf42909a8292febe9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHealth: 100
+  totalHealth: 300
 --- !u!1 &3843580846895688883
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,6 +589,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054108470551558101, guid: d52179f3b64fc2844862425945d9495f,
+        type: 3}
+      propertyPath: damage
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8091096863766835642, guid: d52179f3b64fc2844862425945d9495f,
         type: 3}

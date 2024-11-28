@@ -99,7 +99,7 @@ MonoBehaviour:
   gun: {fileID: 6225858347121828180}
   fovAngle: 70.1
   fovRange: 19
-  maxReactionTime: 2
+  maxReactionTime: 3.51
 --- !u!114 &6538170828306944341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalHealth: 100
+  deathMaterial: {fileID: 13400000, guid: a10a3ab8b5f1a7c45a293e6d05df2024, type: 2}
+  deathForceStrength: 10
 --- !u!1001 &2879809453554331210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -569,12 +571,27 @@ PrefabInstance:
     - target: {fileID: 7054108470551558101, guid: d52179f3b64fc2844862425945d9495f,
         type: 3}
       propertyPath: damage
-      value: 5
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054108470551558101, guid: d52179f3b64fc2844862425945d9495f,
+        type: 3}
+      propertyPath: clipSize
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054108470551558101, guid: d52179f3b64fc2844862425945d9495f,
+        type: 3}
+      propertyPath: fireDelay
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7054108470551558101, guid: d52179f3b64fc2844862425945d9495f,
         type: 3}
       propertyPath: reloadDelay
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054108470551558101, guid: d52179f3b64fc2844862425945d9495f,
+        type: 3}
+      propertyPath: startingAmmo
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7320224426853443889, guid: d52179f3b64fc2844862425945d9495f,
         type: 3}

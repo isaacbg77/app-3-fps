@@ -102,7 +102,9 @@ public class Gun : MonoBehaviour
             //Debug.Log(hit.transform.gameObject);
             if (hit.transform.gameObject.TryGetComponent(out Health health))
             {
-                health.DecreaseHealth(damage);
+                if (health.enabled)
+                    health.DecreaseHealth(damage);
+
                 if (LayerMask.LayerToName(hit.transform.gameObject.layer) == "Player")
                 {
                     UIManager.Instance.UpdatePlayerHealth(health.CurrentHealth);

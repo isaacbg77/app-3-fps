@@ -38,7 +38,7 @@ public class AIHostilePatrol : AIHostile
 
         if (state != AIState.Chase)
         {
-            if (GetNextRandomPosition(transform.position, patrolRange, out Vector3 result))
+            if (GetNextRandomPosition(transform.position, patrolRange, out Vector3 result) && navAgent.enabled)
             {
                 navAgent.SetDestination(result);
             }
