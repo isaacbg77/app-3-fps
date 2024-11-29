@@ -13,6 +13,8 @@ public class PlayerWeaponController : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.IsGamePaused) return;
+
         if (Input.GetButton("Fire1"))
         {
             playerGun.Fire();
