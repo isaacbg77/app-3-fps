@@ -6,7 +6,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    [SerializeField, Range(0, 1)] private float fadeSpeed;
+    [SerializeField, Range(0, 1)] private float messageFadeSpeed;
 
     [SerializeField] private TextMeshProUGUI playerHealth;
     [SerializeField] private TextMeshProUGUI playerAmmo;
@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(DoIntro());
+        ShowMessage(introText, 5f);
     }
 
     public void UpdatePlayerHealth(int value)
@@ -39,26 +39,31 @@ public class UIManager : MonoBehaviour
         playerAmmo.text = clipValue.ToString() + " | " + totalValue.ToString();
     }
 
-    private IEnumerator DoIntro()
+    public void ShowMessage(TextMeshProUGUI message, float duration)
     {
-        Color fadeColor = introText.color;
+        StartCoroutine(ShowMessageAsync(message, duration));
+    }
+
+    private IEnumerator ShowMessageAsync(TextMeshProUGUI message, float duration)
+    {
+        Color fadeColor = message.color;
 
         // Fade in
         while (fadeColor.a < 1)
         {
             fadeColor.a += 0.1f;
-            introText.color = fadeColor;
-            yield return new WaitForSeconds(fadeSpeed);
+            message.color = fadeColor;
+            yield return new WaitForSeconds(messageFadeSpeed);
         }
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(duration);
         
         // Fade out
         while (fadeColor.a > 0)
         {
             fadeColor.a -= 0.1f;
-            introText.color = fadeColor;
-            yield return new WaitForSeconds(fadeSpeed);
+            message.color = fadeColor;
+            yield return new WaitForSeconds(messageFadeSpeed);
         }
     }
 }
