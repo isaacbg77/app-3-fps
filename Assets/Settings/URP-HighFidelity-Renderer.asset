@@ -16,11 +16,11 @@ MonoBehaviour:
   m_Settings:
     AOMethod: 1
     Downsample: 0
-    AfterOpaque: 0
-    Source: 1
-    NormalSamples: 1
-    Intensity: 0.5
-    DirectLightingStrength: 0.25
+    AfterOpaque: 1
+    Source: 0
+    NormalSamples: 2
+    Intensity: 0.15
+    DirectLightingStrength: 0.21
     Radius: 0.25
     Samples: 0
     BlurQuality: 0
@@ -80,15 +80,15 @@ MonoBehaviour:
   m_AssetVersion: 2
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1023
   m_TransparentLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1023
   m_DefaultStencilState:
-    overrideStencilState: 0
+    overrideStencilState: 1
     stencilReference: 0
-    stencilCompareFunction: 8
-    passOperation: 2
+    stencilCompareFunction: 3
+    passOperation: 0
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
@@ -107,12 +107,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: FPS Clip
+  m_Name: GunOpaques
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
-    passTag: FPS Clip
-    Event: 300
+    passTag: GunOpaques
+    Event: 250
     filterSettings:
       RenderQueueType: 0
       LayerMask:
@@ -124,16 +124,16 @@ MonoBehaviour:
     overrideShader: {fileID: 0}
     overrideShaderPassIndex: 0
     overrideMode: 1
-    overrideDepthState: 1
-    depthCompareFunction: 7
+    overrideDepthState: 0
+    depthCompareFunction: 3
     enableWrite: 0
     stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 2
+      overrideStencilState: 1
+      stencilReference: 1
       stencilCompareFunction: 8
-      passOperation: 0
+      passOperation: 2
       failOperation: 0
-      zFailOperation: 1
+      zFailOperation: 0
     cameraSettings:
       overrideCamera: 0
       restoreCamera: 1
