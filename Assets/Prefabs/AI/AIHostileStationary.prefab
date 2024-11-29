@@ -98,8 +98,8 @@ MonoBehaviour:
   target: {fileID: 0}
   gun: {fileID: 6225858347121828180}
   fovAngle: 70.1
-  fovRange: 19
-  maxReactionTime: 3.51
+  fovRange: 30
+  maxReactionTime: 4
 --- !u!114 &6538170828306944341
 MonoBehaviour:
   m_ObjectHideFlags: 0
