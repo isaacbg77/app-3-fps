@@ -114,7 +114,7 @@ public class RigidbodyPlayerController : MonoBehaviour
     
     private void ResetCamera()
     {
-        cameraTarget.localPosition = cameraTargetStartPos;
+        cameraTarget.localPosition = Vector3.MoveTowards(cameraTarget.localPosition, cameraTargetStartPos, 0.01f);
     }
 
     private void FixedUpdate()
