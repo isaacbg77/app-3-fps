@@ -111,6 +111,14 @@ public class Gun : MonoBehaviour
                 {
                     playerHealth.UpdateUI();
                 }
+                else if (health is EnemyHealth enemyHealth)
+                {
+                    // Get enemy to react if they are hit
+                    if (enemyHealth.TryGetComponent(out AIBehaviour ai) && ai.GetState() != AIState.Chase)
+                    {
+                        ai.ChangeState(AIState.Chase);
+                    }
+                }
             }
         }
 

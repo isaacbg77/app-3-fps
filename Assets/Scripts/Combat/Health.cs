@@ -30,6 +30,7 @@ public abstract class Health : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            currentHealth = 0;
             HandleDeath();
         }
     }

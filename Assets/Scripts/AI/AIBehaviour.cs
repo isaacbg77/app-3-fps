@@ -65,6 +65,11 @@ public abstract class AIBehaviour : MonoBehaviour
         state = newState;
     }
     
+    public AIState GetState()
+    {
+        return state;
+    }
+
     protected static bool GetNextRandomPosition(Vector3 start, float range, out Vector3 result)
     {
         for (int i = 0; i < 30; i++)
