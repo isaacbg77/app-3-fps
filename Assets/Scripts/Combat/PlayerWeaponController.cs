@@ -25,7 +25,7 @@ public class PlayerWeaponController : MonoBehaviour
         }
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
         UIManager.Instance.UpdatePlayerAmmo(playerGun.ClipAmmoLeft, playerGun.AmmoLeft);
     }

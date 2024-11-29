@@ -17,7 +17,10 @@ public abstract class Health : MonoBehaviour
     public void IncreaseHealth(int amount)
     {
         if (amount < 0) return;
+
         currentHealth += amount;
+        if (currentHealth > totalHealth)
+            currentHealth = totalHealth;
     }
 
     public void DecreaseHealth(int amount)

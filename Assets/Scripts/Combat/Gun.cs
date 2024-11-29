@@ -47,7 +47,9 @@ public class Gun : MonoBehaviour
     public void AddAmmo(int amount)
     {
         if (amount < 0) return;
+
         ammo += amount;
+        reloadSound.Play();
     }
 
     public void ReloadClip(bool playAnimation)
@@ -105,9 +107,9 @@ public class Gun : MonoBehaviour
                 if (health.enabled)
                     health.DecreaseHealth(damage);
 
-                if (LayerMask.LayerToName(hit.transform.gameObject.layer) == "Player")
+                if (health is PlayerHealth playerHealth)
                 {
-                    UIManager.Instance.UpdatePlayerHealth(health.CurrentHealth);
+                    playerHealth.UpdateUI();
                 }
             }
         }

@@ -5,7 +5,7 @@ public class PlayerHealth : Health
 {
     private void Start()
     {
-        UIManager.Instance.UpdatePlayerHealth(CurrentHealth);
+        UpdateUI();
     }
 
     protected override void HandleDeath()
@@ -13,5 +13,10 @@ public class PlayerHealth : Health
         GameManager.Instance.EndGame(false);
         SceneManager.LoadScene("Dead", LoadSceneMode.Additive);
         gameObject.SetActive(false);
+    }
+    
+    public void UpdateUI()
+    {
+        UIManager.Instance.UpdatePlayerHealth(CurrentHealth);
     }
 }
