@@ -20,7 +20,7 @@ public class AIHostile : AIBehaviour
 
     protected override void HandleChase()
     {
-        if (!CanSeeTarget(transform, target, fovAngle, fovRange))
+        if (!CanSeeTarget(transform, target, fovAngle, fovRange) && !notified)
         {
             ChangeState(AIState.Idle);
         }

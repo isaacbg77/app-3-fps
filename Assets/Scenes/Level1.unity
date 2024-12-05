@@ -3476,7 +3476,7 @@ MonoBehaviour:
   playerAmmo: {fileID: 509454072}
   introText: {fileID: 725187827}
   hitMarker: {fileID: 206873740}
-  hitMarkerDuration: 0.377
+  hitMarkerDuration: 0.112
   hitImage: {fileID: 1295716298}
   hitImageDuration: 0.22
   hitImageAlpha: 0.13
@@ -5215,6 +5215,7 @@ MonoBehaviour:
   totalHealth: 150
   deathMaterial: {fileID: 13400000, guid: a10a3ab8b5f1a7c45a293e6d05df2024, type: 2}
   deathForceStrength: 8
+  despawnTime: 5
   targetText: {fileID: 964947337}
 --- !u!1 &964947335
 GameObject:

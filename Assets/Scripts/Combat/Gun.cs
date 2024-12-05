@@ -119,6 +119,7 @@ public class Gun : MonoBehaviour
                         if (enemyHealth.TryGetComponent(out AIBehaviour ai) && ai.GetState() != AIState.Chase)
                         {
                             ai.ChangeState(AIState.Chase);
+                            ai.Notify();
                         }
                         // Hit marker
                         UIManager.Instance.ShowHitMarker();

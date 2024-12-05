@@ -10,8 +10,11 @@ public abstract class AIBehaviour : MonoBehaviour
     protected NavMeshAgent navAgent;
     protected Animator anim;
     protected AIState state = AIState.Idle;
-
     protected bool isMoving = false;
+
+    [SerializeField, Range(0, 50)] protected float stopNotifyTime = 5f;
+    protected bool notified = false;
+    private Coroutine notifyCoroutine;
 
     protected void Awake()
     {
@@ -69,6 +72,24 @@ public abstract class AIBehaviour : MonoBehaviour
     {
         return state;
     }
+
+    public void Notify()
+    {
+        if (notifyCoroutine != null)
+        {
+            StopCoroutine(notifyCoroutine);
+        }
+        notifyCoroutine = StartCoroutine(NotifyAsync());
+    }
+
+    protected IEnumerator NotifyAsync()
+    {
+        notified = true;
+        yield return new WaitForSeconds(stopNotifyTime);
+        notified = false;
+    }
+    
+    // -------------------------------------------------------------------------------------------
 
     protected static bool GetNextRandomPosition(Vector3 start, float range, out Vector3 result)
     {
