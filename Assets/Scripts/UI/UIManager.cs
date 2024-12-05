@@ -7,13 +7,18 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    [SerializeField, Range(0, 1)] private float messageFadeSpeed;
-    [SerializeField, Range(0, 1)] private float hitMarkerDuration;
-
+    [SerializeField, Range(0, 1)] private float fadeSpeed;
     [SerializeField] private TextMeshProUGUI playerHealth;
     [SerializeField] private TextMeshProUGUI playerAmmo;
     [SerializeField] private TextMeshProUGUI introText;
+
     [SerializeField] private RectTransform hitMarker;
+    [SerializeField, Range(0, 1)] private float hitMarkerDuration;
+
+    [SerializeField] private RawImage hitImage;
+    [SerializeField, Range(0, 1)] private float hitImageDuration;
+    [SerializeField, Range(0, 1)] private float hitImageAlpha;
+    private Coroutine hitCoroutine;
 
     private void Awake()
     {
@@ -56,7 +61,7 @@ public class UIManager : MonoBehaviour
         {
             fadeColor.a += 0.1f;
             message.color = fadeColor;
-            yield return new WaitForSeconds(messageFadeSpeed);
+            yield return new WaitForSeconds(fadeSpeed);
         }
 
         yield return new WaitForSeconds(duration);
@@ -66,7 +71,7 @@ public class UIManager : MonoBehaviour
         {
             fadeColor.a -= 0.1f;
             message.color = fadeColor;
-            yield return new WaitForSeconds(messageFadeSpeed);
+            yield return new WaitForSeconds(fadeSpeed);
         }
     }
 
@@ -80,5 +85,28 @@ public class UIManager : MonoBehaviour
         hitMarker.gameObject.SetActive(true);
         yield return new WaitForSeconds(hitMarkerDuration);
         hitMarker.gameObject.SetActive(false);
+    }
+
+    public void ShowHitImage()
+    {
+        if (hitCoroutine != null) {
+            StopCoroutine(hitCoroutine);
+        }
+        hitCoroutine = StartCoroutine(ShowHitImageAsync());
+    }
+
+    private IEnumerator ShowHitImageAsync()
+    {
+        Color fadeColor = hitImage.color;
+        fadeColor.a = hitImageAlpha;
+        hitImage.color = fadeColor;
+        yield return new WaitForSeconds(hitImageDuration);
+
+        while (fadeColor.a > 0)
+        {
+            fadeColor.a -= 0.01f;
+            hitImage.color = fadeColor;
+            yield return new WaitForSeconds(fadeSpeed);
+        }
     }
 }

@@ -104,24 +104,26 @@ public class Gun : MonoBehaviour
             //Debug.Log(hit.transform.gameObject);
             if (hit.transform.gameObject.TryGetComponent(out Health health))
             {
-                if (health is PlayerHealth playerHealth)
+                if (health.enabled && health.CurrentHealth > 0)
                 {
-                    playerHealth.UpdateUI();
-                }
-                else if (health is EnemyHealth enemyHealth)
-                {
-                    // Get enemy to react if they are hit
-                    if (enemyHealth.TryGetComponent(out AIBehaviour ai) && ai.GetState() != AIState.Chase)
-                    {
-                        ai.ChangeState(AIState.Chase);
-                    }
-                    // Hit marker
-                    if (enemyHealth.CurrentHealth > 0)
-                        UIManager.Instance.ShowHitMarker();
-                }
-                
-                if (health.enabled)
                     health.DecreaseHealth(damage);
+
+                    if (health is PlayerHealth playerHealth)
+                    {
+                        playerHealth.UpdateUI();
+                        UIManager.Instance.ShowHitImage();
+                    }
+                    else if (health is EnemyHealth enemyHealth)
+                    {
+                        // Get enemy to react if they are hit
+                        if (enemyHealth.TryGetComponent(out AIBehaviour ai) && ai.GetState() != AIState.Chase)
+                        {
+                            ai.ChangeState(AIState.Chase);
+                        }
+                        // Hit marker
+                        UIManager.Instance.ShowHitMarker();
+                    }
+                }
             }
         }
 
