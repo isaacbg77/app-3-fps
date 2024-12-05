@@ -128,6 +128,7 @@ MonoBehaviour:
   totalHealth: 100
   deathMaterial: {fileID: 13400000, guid: a10a3ab8b5f1a7c45a293e6d05df2024, type: 2}
   deathForceStrength: 10
+  despawnTime: 10
 --- !u!1001 &2879809453554331210
 PrefabInstance:
   m_ObjectHideFlags: 0

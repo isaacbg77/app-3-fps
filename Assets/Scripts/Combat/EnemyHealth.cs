@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,6 +6,7 @@ public class EnemyHealth : Health
 {
     [SerializeField] private PhysicMaterial deathMaterial;
     [SerializeField, Range(0, 100)] private float deathForceStrength = 5f;
+    [SerializeField, Range(0, 50)] private float despawnTime = 5f;
 
     protected override void HandleDeath()
     {
@@ -32,5 +34,12 @@ public class EnemyHealth : Health
         body.AddForce(transform.TransformDirection(Vector3.back) * deathForceStrength, ForceMode.Impulse);
 
         enabled = false;
+        StartCoroutine(DestoryWithDelay());
+    }
+
+    private IEnumerator DestoryWithDelay()
+    {
+        yield return new WaitForSeconds(despawnTime);
+        Destroy(gameObject);
     }
 }
