@@ -12,7 +12,7 @@ public class AIHostile : AIBehaviour
     
     protected override void HandleIdle()
     {
-        if (CanSeeTarget(transform, target, fovAngle, fovRange))
+        if (CanSeeTarget(transform, target, fovAngle, fovRange) || notified)
         {
             StartCoroutine(TargetWithDelay());
         }

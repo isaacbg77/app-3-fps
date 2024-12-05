@@ -63,7 +63,7 @@ public abstract class AIBehaviour : MonoBehaviour
         anim.SetBool("IsMoving", isMoving);
     }
 
-    public void ChangeState(AIState newState)
+    protected void ChangeState(AIState newState)
     {
         state = newState;
     }

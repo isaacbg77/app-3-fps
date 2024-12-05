@@ -22,7 +22,7 @@ public class AIHostilePatrol : AIHostile
 
     protected override void HandleRun()
     {
-        if (CanSeeTarget(transform, target, fovAngle, fovRange))
+        if (CanSeeTarget(transform, target, fovAngle, fovRange) || notified)
         {
             StartCoroutine(TargetWithDelay());
         }
