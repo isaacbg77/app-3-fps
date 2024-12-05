@@ -104,9 +104,6 @@ public class Gun : MonoBehaviour
             //Debug.Log(hit.transform.gameObject);
             if (hit.transform.gameObject.TryGetComponent(out Health health))
             {
-                if (health.enabled)
-                    health.DecreaseHealth(damage);
-
                 if (health is PlayerHealth playerHealth)
                 {
                     playerHealth.UpdateUI();
@@ -118,7 +115,13 @@ public class Gun : MonoBehaviour
                     {
                         ai.ChangeState(AIState.Chase);
                     }
+                    // Hit marker
+                    if (enemyHealth.CurrentHealth > 0)
+                        UIManager.Instance.ShowHitMarker();
                 }
+                
+                if (health.enabled)
+                    health.DecreaseHealth(damage);
             }
         }
 

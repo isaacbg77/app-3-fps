@@ -1,16 +1,19 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
     [SerializeField, Range(0, 1)] private float messageFadeSpeed;
+    [SerializeField, Range(0, 1)] private float hitMarkerDuration;
 
     [SerializeField] private TextMeshProUGUI playerHealth;
     [SerializeField] private TextMeshProUGUI playerAmmo;
     [SerializeField] private TextMeshProUGUI introText;
+    [SerializeField] private RectTransform hitMarker;
 
     private void Awake()
     {
@@ -65,5 +68,17 @@ public class UIManager : MonoBehaviour
             message.color = fadeColor;
             yield return new WaitForSeconds(messageFadeSpeed);
         }
+    }
+
+    public void ShowHitMarker()
+    {
+        StartCoroutine(ShowHitMarkerAsync());
+    }
+
+    private IEnumerator ShowHitMarkerAsync()
+    {
+        hitMarker.gameObject.SetActive(true);
+        yield return new WaitForSeconds(hitMarkerDuration);
+        hitMarker.gameObject.SetActive(false);
     }
 }
